@@ -32,9 +32,25 @@ export default {
       const ret = await axios.get('http://localhost:8999/static/map/china.json')
       this.$echarts.registerMap('china', ret.data)
       const initOption = {
+        title: {
+          text: '▎商家分布',
+          left: 20,
+          top: 20
+        },
         geo: {
           type: 'map',
-          map: 'china'
+          map: 'china',
+          top: '5%',
+          bottom: '5%',
+          itemStyle: {
+            areaColor: '#2E72BF',
+            borderColor: '#333'
+          }
+        },
+        legend: {
+          left: '5%',
+          bottom: '5%',
+          orient: 'vertical'
         }
       }
       this.chartInstance.setOption(initOption)
@@ -54,10 +70,16 @@ export default {
       })
       const seriesArr = this.allData.map(item => {
         // return的这个对象就代表的是一个类别下的所有散点数据
+        // 如果想要在地图中显示散点的数据，所以我们需要给散点的图表增加一个配置，coordinateSystem:geo
         return {
           type: 'effectScatter',
+          rippleEffect: { // 涟漪效果
+            scale: 5,
+            brushType: 'stroke'
+          },
           name: item.name,
-          data: item.children
+          data: item.children,
+          coordinateSystem: 'geo'
         }
       })
       const dataOption = {

@@ -12,8 +12,8 @@
 import Map from '@/components/Map'
 export default {
   components: {
-    'single-map': Map,
-  },
+    'single-map': Map
+  }
 }
 </script>
 <style>
